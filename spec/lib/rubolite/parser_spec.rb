@@ -49,6 +49,7 @@ describe Rubolite::Parser do
     it "parses repos" do
       repo_names = subject.repos.map(&:name)
       expect(repo_names).to include "gitolite-admin"
+      expect(repo_names).to include "gitolite-awesome"
     end
 
     it "parses users" do
@@ -61,6 +62,11 @@ describe Rubolite::Parser do
       user = repo.users.first
 
       expect(user.permissions).to eq "RW+"
+    end
+
+    it "parses multiple users" do
+      repo = subject.repos.select {|r| r.name == "gitolite-awesome" }.first
+      expect(repo).to have(3).users
     end
   end
 end
