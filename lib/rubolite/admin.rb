@@ -2,13 +2,20 @@ module Rubolite
   class Admin
     InvalidPath = Class.new(Exception)
     InvalidGitRepo = Class.new(Exception)
-    
-    attr_reader :path
+    InvalidRepo = Class.new(Exception)
+
+    attr_reader :path, :repos
 
     def path=(new_path)
       valid_path?(new_path)
       @path = new_path
     end
+
+    def add_repo(repo)
+      raise InvalidRepo, "Repo not type of Rubolite::Repo, got #{repo.class}" unless repo.kind_of?(Repo)
+      (@repos ||= []) << repo
+    end
+    alias :<< :add_repo
 
     private
 

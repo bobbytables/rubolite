@@ -22,4 +22,13 @@ describe Rubolite::Admin do
       expect { subject.path = "./spec/support/gitolite-admin" }.not_to raise_error(Rubolite::Admin::InvalidGitRepo)
     end
   end
+
+  context "adding repos" do
+    let(:repo) { Rubolite::Repo.new }
+
+    it "adds a repo" do
+      subject.add_repo repo
+      subject.should have(1).repos
+    end
+  end
 end
