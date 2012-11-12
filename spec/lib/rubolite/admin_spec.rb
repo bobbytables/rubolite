@@ -35,4 +35,11 @@ describe Rubolite::Admin do
       expect { subject.add_repo "bad" }.to raise_error(Rubolite::Admin::InvalidRepo)
     end
   end
+
+  context "config parsing" do
+    it "#parser returns a parser object" do
+      subject.path = "./spec/support/gitolite-admin"
+      expect(subject.parser).to be_kind_of Rubolite::Parser
+    end  
+  end
 end

@@ -28,6 +28,8 @@ module Rubolite
           current_repo.add_user(user)
         end
       end
+
+      self
     end
 
     def parse_repo_line(repo_line)
