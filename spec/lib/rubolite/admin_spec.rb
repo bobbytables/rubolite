@@ -17,5 +17,9 @@ describe Rubolite::Admin do
     it "raises an error when the path given isn't a git repository" do
       expect { subject.path = "./spec/support" }.to raise_error(Rubolite::Admin::InvalidGitRepo)
     end
+
+    it "does not raise an error when the path given is a valid git repository" do
+      expect { subject.path = "./spec/support/gitolite-admin" }.not_to raise_error(Rubolite::Admin::InvalidGitRepo)
+    end
   end
 end
