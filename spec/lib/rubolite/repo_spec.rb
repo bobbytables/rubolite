@@ -13,4 +13,14 @@ describe Rubolite::Repo do
       expect(repo.name).to eq("newname")
     end
   end
+
+  context "users" do
+    let(:user) { Rubolite::User.new "robert", "RW+" }
+    let(:repo) { Rubolite::Repo.new("newname") }
+
+    it "adds a user" do
+      repo.add_user(user)
+      expect(repo.users).to include user
+    end
+  end
 end

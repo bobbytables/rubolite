@@ -18,8 +18,14 @@ module Rubolite
           repo = Repo.new(repo_name)
 
           (@repos ||= []) << repo
+
+          current_repo = repo
         when /^(R|W|\-)/
+          next unless current_repo
+
           permissions, user = parse_permissions_line(line)
+          user = User.new(user, permissions)
+          current_repo.add_user(user)
         end
       end
     end
