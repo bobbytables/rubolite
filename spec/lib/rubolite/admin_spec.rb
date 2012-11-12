@@ -30,5 +30,9 @@ describe Rubolite::Admin do
       subject.add_repo repo
       subject.should have(1).repos
     end
+
+    it "raises when trying to add a repo of a bad class" do
+      expect { subject.add_repo "bad" }.to raise_error(Rubolite::Admin::InvalidRepo)
+    end
   end
 end
