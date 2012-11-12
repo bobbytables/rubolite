@@ -18,6 +18,8 @@ module Rubolite
           repo = Repo.new(repo_name)
 
           (@repos ||= []) << repo
+        when /^(R|W|\-)/
+          permissions, user = parse_permissions_line(line)
         end
       end
     end
@@ -27,6 +29,14 @@ module Rubolite
         matched[1]
       else
         nil
+      end
+    end
+
+    def parse_permissions_line(permission_line)
+      if matched = permission_line.match(/([R|W|\+\-]+)\s+=\s+([\w\d\-]+)/)
+        [matched[1], matched[2]]
+      else
+        []
       end
     end
 

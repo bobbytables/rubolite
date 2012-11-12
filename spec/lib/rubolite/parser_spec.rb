@@ -14,6 +14,38 @@ describe Rubolite::Parser do
       expect(subject.parse_repo_line("repo somerepo")).to eq("somerepo")
     end
 
+    context "permissions" do
+      specify "read permissions" do
+        line = "R = robert"
+        expect(subject.parse_permissions_line(line)).to eq(["R", "robert"])
+      end
+
+      specify "write permissions" do
+        line = "W = robert"
+        expect(subject.parse_permissions_line(line)).to eq(["W", "robert"])
+      end
+
+      specify "read / write permissions" do
+        line = "RW = robert"
+        expect(subject.parse_permissions_line(line)).to eq(["RW", "robert"])
+      end
+
+      specify "read / write / force-push permissions" do
+        line = "RW+ = robert"
+        expect(subject.parse_permissions_line(line)).to eq(["RW+", "robert"])
+      end
+
+      specify "any push permissions" do
+        line = "- = robert"
+        expect(subject.parse_permissions_line(line)).to eq(["-", "robert"])
+      end
+
+      specify "space agnostic" do
+        line = "RW+       =      robert"
+        expect(subject.parse_permissions_line(line)).to eq(["RW+", "robert"])
+      end
+    end
+
     it "parses repos" do
       repo_names = subject.repos.map(&:name)
       expect(repo_names).to include "gitolite-admin"
