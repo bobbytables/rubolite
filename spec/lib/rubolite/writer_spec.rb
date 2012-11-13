@@ -10,6 +10,11 @@ describe Rubolite::Writer do
 
   before(:each) { subject.write_path = temp_file.path }
 
+  it "sets write path to parser config path on initialize" do
+    writer = Rubolite::Writer.new(parser)
+    expect(writer.write_path).to eq parser.conf_file
+  end
+
   it "accepts a write path" do
     expect(subject).to respond_to :write_path
     expect(subject).to respond_to :write_path=

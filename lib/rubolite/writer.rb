@@ -5,6 +5,7 @@ module Rubolite
 
     def initialize(parser)
       @parser = parser
+      @write_path = parser.conf_file
     end
 
     def write!
