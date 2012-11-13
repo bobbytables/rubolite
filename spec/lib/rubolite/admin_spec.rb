@@ -4,6 +4,11 @@ describe Rubolite::Admin do
   subject { Rubolite::Admin.new }
 
   context "location" do
+    it "sets a location on initialization if given" do
+      admin = Rubolite::Admin.new("./spec/support/gitolite-admin")
+      expect(admin.path).to eq("./spec/support/gitolite-admin")
+    end
+
     it "sets a location for a repository" do
       path_location = "./spec/support/gitolite-admin"
       subject.path = path_location

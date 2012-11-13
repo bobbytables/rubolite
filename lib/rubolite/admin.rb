@@ -6,6 +6,10 @@ module Rubolite
 
     attr_reader :path, :repos
 
+    def initialize(path=nil)
+      @path = path if path && valid_path?(path)
+    end
+
     def path=(new_path)
       valid_path?(new_path)
       @path = new_path
@@ -30,6 +34,7 @@ module Rubolite
     def valid_path?(path)
       raise InvalidPath, "#{path} is not a directory" unless File.directory?(path)
       raise InvalidGitRepo, "#{path} is not a git repository" unless File.directory?("#{path}/.git")
+      true
     end
   end
 end
