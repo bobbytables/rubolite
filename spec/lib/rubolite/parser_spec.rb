@@ -1,14 +1,19 @@
 require "spec_helper"
 
 describe Rubolite::Parser do
+  subject { Rubolite::Parser.new("./spec/fixtures/gitolite-conf.conf") }
+  
   it "initializes with a conf file" do
     conf_file = "./spec/fixtures/gitolite-conf.conf"
     parser = Rubolite::Parser.new(conf_file)
     expect(parser.conf_file).to eq(conf_file)
   end
 
+  specify "#writer returns a writer object" do
+    expect(subject.writer).to be_kind_of Rubolite::Writer
+  end
+
   context "parses" do
-    subject { Rubolite::Parser.new("./spec/fixtures/gitolite-conf.conf") }
 
     specify "repo lines" do
       expect(subject.parse_repo_line("repo somerepo")).to eq("somerepo")

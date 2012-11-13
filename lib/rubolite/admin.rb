@@ -18,7 +18,11 @@ module Rubolite
     alias :<< :add_repo
 
     def parser
-      @parser ||= Parser.new("#{path}/conf/gitolite.conf").parse!
+      @parser ||= Parser.new("#{path}/conf/gitolite.conf")
+    end
+
+    def writer
+      parser.writer
     end
 
     private
