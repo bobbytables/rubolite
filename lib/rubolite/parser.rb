@@ -8,33 +8,8 @@ module Rubolite
       parse!
     end
 
-    def parse!
-      current_repo = nil
-
-      conf_contents.each do |line|
-        keyword = line.strip
-        case keyword
-        when /^repo\s/
-          repo_name = parse_repo_line(line)
-          repo = Repo.new(repo_name)
-
-          (@repos ||= []) << repo
-
-          current_repo = repo
-        when /^(R|W|\-)/
-          next unless current_repo
-
-          permissions, user = parse_permissions_line(line)
-          user = User.new(user, permissions)
-          current_repo.add_user(user)
-        when /^@\w/
-          group_name, users = parse_group_line(line)
-          @groups[group_name] ||= [] 
-          @groups[group_name] += users
-        end
-      end
-
-      self
+    def writer
+      @writer ||= Writer.new(self)
     end
 
     def parse_repo_line(repo_line)
@@ -65,6 +40,35 @@ module Rubolite
     end
 
     private
+
+    def parse!
+      current_repo = nil
+
+      conf_contents.each do |line|
+        keyword = line.strip
+        case keyword
+        when /^repo\s/
+          repo_name = parse_repo_line(line)
+          repo = Repo.new(repo_name)
+
+          (@repos ||= []) << repo
+
+          current_repo = repo
+        when /^(R|W|\-)/
+          next unless current_repo
+
+          permissions, user = parse_permissions_line(line)
+          user = User.new(user, permissions)
+          current_repo.add_user(user)
+        when /^@\w/
+          group_name, users = parse_group_line(line)
+          @groups[group_name] ||= [] 
+          @groups[group_name] += users
+        end
+      end
+
+      self
+    end
 
     def conf_contents
       @conf_contents ||= File.readlines(conf_file)

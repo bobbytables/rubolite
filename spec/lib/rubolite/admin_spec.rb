@@ -40,6 +40,11 @@ describe Rubolite::Admin do
     it "#parser returns a parser object" do
       subject.path = "./spec/support/gitolite-admin"
       expect(subject.parser).to be_kind_of Rubolite::Parser
-    end  
+    end
+
+    it "#writer returns a writer object" do
+      subject.path = "./spec/support/gitolite-admin"
+      expect(subject.writer).to be_kind_of Rubolite::Writer
+    end
   end
 end
