@@ -1,9 +1,10 @@
 module Rubolite
   class Parser
-    attr_reader :conf_file, :repos
+    attr_reader :conf_file, :repos, :groups
 
     def initialize(conf_file)
       @conf_file = conf_file
+      @groups = {}
       parse!
     end
 
@@ -26,6 +27,8 @@ module Rubolite
           permissions, user = parse_permissions_line(line)
           user = User.new(user, permissions)
           current_repo.add_user(user)
+        when /^@\w/
+          parse_group_line(line)
         end
       end
 
@@ -45,6 +48,17 @@ module Rubolite
         [matched[1], matched[2]]
       else
         []
+      end
+    end
+
+    def parse_group_line(group_line)
+      if matched = group_line.match(/@([\w]+)\s+=\s+(.*)/)
+        group_name = matched[1]
+        names = matched[2].split(" ")
+        @groups[group_name] ||= [] 
+        @groups[group_name] += names
+      else
+        nil
       end
     end
 

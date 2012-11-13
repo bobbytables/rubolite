@@ -68,5 +68,20 @@ describe Rubolite::Parser do
       repo = subject.repos.select {|r| r.name == "gitolite-awesome" }.first
       expect(repo).to have(3).users
     end
+
+    context "groups" do
+      let(:group_line) { "@staff = robert bobby lauren" }
+
+      it "returns group name and users" do
+        subject.parse_group_line(group_line)
+        expect(subject.groups).to have_key "staff"
+        expect(subject.groups["staff"]).to eq %w(robert bobby lauren)
+      end
+
+      it "parses groups" do
+        subject.parse_group_line(group_line)
+        subject.should have(1).groups
+      end
+    end
   end
 end
