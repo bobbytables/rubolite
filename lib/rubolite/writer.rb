@@ -21,9 +21,19 @@ module Rubolite
     end
 
     def repos
-      parser.repos.each_with_object([]) do |repo, lines|
-        lines << "repo #{repo.name}"
-      end.join("\n") + "\n"
+      parser.repos.each_with_object([]) do |repo, blocks|
+        blocks << repo_block(repo)
+      end.join("\n\n") + "\n"
+    end
+
+    def repo_block(repo)
+      lines = []
+      lines << "repo #{repo.name}"
+      repo.users.each do |user|
+        lines << "    #{user.permissions} = #{user.name}"
+      end
+
+      lines.join("\n")
     end
   end
 end

@@ -38,6 +38,23 @@ describe Rubolite::Writer do
     end
 
     context "users" do
+      let(:repo) { Rubolite::Repo.new("somerepo") }
+      before(:each) do
+        repo.add_user Rubolite::User.new "robert", "RW+"
+      end
+
+      it "adds users for a repo block correctly" do
+        expect(subject.repo_block(repo)).to include "RW+ = robert"
+      end
+
+      it "writes users correctly" do
+        subject.write!
+        repo = parser.repos.select {|r| r.name == "gitolite-admin" }.first
+        user = repo.users.select {|u| u.name == "gitolite" }.first
+
+        expect(user.name).to eq("gitolite")
+        expect(user.permissions).to eq("RW+")
+      end
     end
   end
 end
