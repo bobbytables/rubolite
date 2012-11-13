@@ -70,16 +70,13 @@ describe Rubolite::Parser do
     end
 
     context "groups" do
-      let(:group_line) { "@staff = robert bobby lauren" }
+      let(:group_line) { "@somegroup = robert bobby lauren" }
 
       it "returns group name and users" do
-        subject.parse_group_line(group_line)
-        expect(subject.groups).to have_key "staff"
-        expect(subject.groups["staff"]).to eq %w(robert bobby lauren)
+        expect(subject.parse_group_line(group_line)).to eq ["somegroup", %w(robert bobby lauren)]
       end
 
       it "parses groups" do
-        subject.parse_group_line(group_line)
         subject.should have(1).groups
       end
     end

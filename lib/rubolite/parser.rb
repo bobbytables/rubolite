@@ -28,7 +28,9 @@ module Rubolite
           user = User.new(user, permissions)
           current_repo.add_user(user)
         when /^@\w/
-          parse_group_line(line)
+          group_name, users = parse_group_line(line)
+          @groups[group_name] ||= [] 
+          @groups[group_name] += users
         end
       end
 
@@ -55,8 +57,8 @@ module Rubolite
       if matched = group_line.match(/@([\w]+)\s+=\s+(.*)/)
         group_name = matched[1]
         names = matched[2].split(" ")
-        @groups[group_name] ||= [] 
-        @groups[group_name] += names
+        
+        [group_name, names]
       else
         nil
       end
