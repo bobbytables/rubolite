@@ -5,6 +5,7 @@ module Rubolite
 
     def initialize(name=nil)
       @name = name
+      @users = []
     end
 
     def add_user(user)

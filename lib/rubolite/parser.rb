@@ -21,7 +21,7 @@ module Rubolite
     end
 
     def parse_permissions_line(permission_line)
-      if matched = permission_line.match(/([R|W|\+\-]+)\s+=\s+([\w\d\-]+)/)
+      if matched = permission_line.match(/([R|W|\+\-]+)\s+=\s+([\@\w\d\-]+)/)
         [matched[1], matched[2]]
       else
         []
