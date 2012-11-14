@@ -26,7 +26,7 @@ module Rubolite
     end
 
     def writer
-      parser.writer
+      @writer ||= parser.writer
     end
 
     private
