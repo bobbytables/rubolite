@@ -23,5 +23,5 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency "pry"
   gem.add_development_dependency "fakefs"
 
-  gem.add_dependency "grit", "~> 2.5.0"
+  gem.add_dependency "git", "~> 1.2.5"
 end

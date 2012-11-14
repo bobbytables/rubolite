@@ -1,3 +1,5 @@
+require "git"
+
 module Rubolite
   class Admin
     InvalidPath = Class.new(Exception)
@@ -27,6 +29,14 @@ module Rubolite
 
     def writer
       @writer ||= parser.writer
+    end
+
+    def git
+      @git ||= Git.open(path)
+    end
+
+    def repo_origin
+      @repo_origin ||= git.remote("origin")
     end
 
     private

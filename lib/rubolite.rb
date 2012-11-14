@@ -5,6 +5,7 @@ require "rubolite/user"
 require "rubolite/parser"
 require "rubolite/writer"
 require "rubolite/ssh_key"
+require "rubolite/client"
 
 module Rubolite
 end

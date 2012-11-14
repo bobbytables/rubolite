@@ -52,4 +52,12 @@ describe Rubolite::Admin do
       expect(subject.writer).to be_kind_of Rubolite::Writer
     end
   end
+
+  context "git" do
+    subject { Rubolite::Admin.new("./spec/support/gitolite-admin") }
+
+    specify "#git returns a grit repo instance" do
+      expect(subject.git).to be_kind_of Git::Base
+    end
+  end
 end
