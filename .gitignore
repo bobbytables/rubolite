@@ -19,3 +19,4 @@ spec/support/gitolite-admin
 .yardoc
 _yardoc
 doc/
+Gemfile.lock
