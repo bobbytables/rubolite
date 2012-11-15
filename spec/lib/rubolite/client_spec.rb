@@ -47,5 +47,12 @@ describe Rubolite::Client do
       admin.git.should_receive(:push).with(origin)
       subject.push!
     end
+
+    it "saves, commits, and pushes" do
+      admin.writer.should_receive(:write!)
+      admin.git.should_receive(:commit_all)
+      admin.git.should_receive(:push)
+      subject.save_and_push!
+    end
   end
 end

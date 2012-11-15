@@ -33,5 +33,11 @@ module Rubolite
     def push!
       admin.git.push(admin.repo_origin)
     end
+
+    def save_and_push!
+      save!
+      commit!
+      push!
+    end
   end
 end
