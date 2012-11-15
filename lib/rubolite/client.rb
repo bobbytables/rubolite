@@ -38,6 +38,7 @@ module Rubolite
     end
 
     def commit!
+      admin.git.add('.')
       admin.git.commit_all("Modified configuration by rubolite")
     end
 
