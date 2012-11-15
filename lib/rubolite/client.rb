@@ -4,7 +4,7 @@ module Rubolite
 
     def initialize(admin)
       @admin = admin
-      @ssh_keys = []
+      @ssh_keys = {}
     end
 
     def repos
@@ -23,12 +23,18 @@ module Rubolite
       repos << repo
     end
 
-    def add_ssh_key(ssh_key)
-      ssh_keys << ssh_key
+    def add_ssh_key(user, ssh_key)
+      ssh_keys[user] = ssh_key
     end
 
     def save!
       admin.writer.write!
+    end
+
+    def save_ssh_keys!
+      ssh_keys.each do |user, key|
+        key.write_for user, "#{admin.path}/keydir"
+      end
     end
 
     def commit!
