@@ -47,6 +47,7 @@ module Rubolite
 
     def save_and_push!
       save!
+      save_ssh_keys!
       commit!
       push!
     end

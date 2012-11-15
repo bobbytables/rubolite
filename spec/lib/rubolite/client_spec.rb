@@ -66,9 +66,10 @@ describe Rubolite::Client do
     end
 
     it "saves, commits, and pushes" do
-      admin.writer.should_receive(:write!)
-      admin.git.should_receive(:commit_all)
-      admin.git.should_receive(:push)
+      subject.should_receive(:save!)
+      subject.should_receive(:save_ssh_keys!)
+      subject.should_receive(:commit!)
+      subject.should_receive(:push!)
       subject.save_and_push!
     end
   end
