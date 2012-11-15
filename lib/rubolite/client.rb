@@ -1,9 +1,10 @@
 module Rubolite
   class Client
-    attr_reader :admin
+    attr_reader :admin, :ssh_keys
 
     def initialize(admin)
       @admin = admin
+      @ssh_keys = []
     end
 
     def repos
@@ -20,6 +21,10 @@ module Rubolite
 
     def add_repo(repo)
       repos << repo
+    end
+
+    def add_ssh_key(ssh_key)
+      ssh_keys << ssh_key
     end
 
     def save!

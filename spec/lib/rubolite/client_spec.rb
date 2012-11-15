@@ -31,6 +31,13 @@ describe Rubolite::Client do
     end
   end
 
+  context "ssh keys" do
+    specify "#add_ssh_key adds an ssh key" do
+      subject.add_ssh_key Rubolite::SSHKey.new("robert", "whatupfinger", "robert@local")
+      subject.should have(1).ssh_keys
+    end
+  end
+
   context "saving" do
     it "saves changes" do
       admin.writer.should_receive(:write!)
