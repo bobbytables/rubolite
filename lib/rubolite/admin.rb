@@ -39,6 +39,10 @@ module Rubolite
       @repo_origin ||= git.remote("origin")
     end
 
+    def client
+      @client ||= Client.new(self)
+    end
+
     private
 
     def valid_path?(path)

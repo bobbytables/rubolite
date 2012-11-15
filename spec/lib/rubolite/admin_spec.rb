@@ -3,6 +3,10 @@ require "spec_helper"
 describe Rubolite::Admin do
   subject { Rubolite::Admin.new }
 
+  it "returns a client object" do
+    expect(subject.client).to be_kind_of Rubolite::Client
+  end
+
   context "location" do
     it "sets a location on initialization if given" do
       admin = Rubolite::Admin.new("./spec/support/gitolite-admin")
