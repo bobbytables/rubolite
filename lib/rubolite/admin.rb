@@ -12,6 +12,16 @@ module Rubolite
       @path = path if path && valid_path?(path)
     end
 
+    def reset!
+      @parser = nil
+      @writer = nil
+      @git = nil
+      @repo_origin = nil
+      @client = nil
+
+      self
+    end
+
     def path=(new_path)
       valid_path?(new_path)
       @path = new_path

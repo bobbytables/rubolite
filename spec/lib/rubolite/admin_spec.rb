@@ -7,6 +7,40 @@ describe Rubolite::Admin do
     expect(subject.client).to be_kind_of Rubolite::Client
   end
 
+  context "reset!" do
+    let(:admin) { Rubolite::Admin.new("./spec/support/gitolite-admin") }
+
+    it "resets the parser" do
+      parser = admin.parser
+      admin.reset!
+      expect(admin.parser).not_to eq(parser)
+    end
+
+    it "resets the writer" do
+      writer = admin.writer
+      admin.reset!
+      expect(admin.writer).not_to eq(writer)
+    end
+
+    it "resets git" do
+      git = admin.git
+      admin.reset!
+      expect(admin.git).not_to eq(git)
+    end
+
+    it "resets repo_origin" do
+      repo_origin = admin.repo_origin
+      admin.reset!
+      expect(admin.repo_origin).not_to eq(repo_origin)
+    end
+
+    it "resets the client" do
+      client = admin.client
+      admin.reset!
+      expect(admin.client).not_to eq(client)
+    end
+  end
+
   context "location" do
     it "sets a location on initialization if given" do
       admin = Rubolite::Admin.new("./spec/support/gitolite-admin")
