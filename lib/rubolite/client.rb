@@ -29,12 +29,14 @@ module Rubolite
 
     def save!
       admin.writer.write!
+      reset!
     end
 
     def save_ssh_keys!
       ssh_keys.each do |user, key|
         key.write_for user, "#{admin.path}/keydir"
       end
+      reset!
     end
 
     def commit!
@@ -51,6 +53,13 @@ module Rubolite
       save_ssh_keys!
       commit!
       push!
+    end
+
+    def reset!
+      admin.reset!
+      @repos = nil
+      @groups = nil
+      @ssh_keys = {}
     end
   end
 end

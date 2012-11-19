@@ -72,5 +72,40 @@ describe Rubolite::Client do
       subject.should_receive(:push!)
       subject.save_and_push!
     end
+
+    it "resets and reparses after save is called" do
+      subject.should_receive(:reset!)
+      subject.save!
+    end
+
+    it "resets and reparses after save_ssh_keys is called" do
+      subject.should_receive(:reset!)
+      subject.save_ssh_keys!
+    end
+  end
+
+  context "resetting" do
+    it "resets the admin" do
+      subject.admin.should_receive(:reset!)
+      subject.reset!
+    end
+
+    it "resets it's repos" do
+      repos = subject.repos
+      subject.reset!
+      expect(subject.repos).not_to eq(repos)
+    end
+
+    it "resets it's groups" do
+      groups = subject.groups.object_id
+      subject.reset!
+      expect(subject.groups.object_id).not_to eq(groups)
+    end
+
+    it "resets it's ssh keys" do
+      ssh_keys = subject.ssh_keys.object_id
+      subject.reset!
+      expect(subject.ssh_keys.object_id).not_to eq(ssh_keys)
+    end
   end
 end
