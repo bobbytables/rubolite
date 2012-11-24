@@ -59,6 +59,7 @@ describe Rubolite::Client do
     end
 
     it "commits the changes to the repo" do
+      subject.stub commitable?: true
       admin.git.should_receive(:commit)
       subject.commit!
     end
