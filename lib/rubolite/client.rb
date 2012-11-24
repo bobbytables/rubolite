@@ -1,6 +1,10 @@
 module Rubolite
   class Client
+    extend Forwardable
+
     attr_reader :admin, :ssh_keys
+
+    def_delegators :@admin, :git
 
     def initialize(admin)
       @admin = admin
@@ -40,8 +44,9 @@ module Rubolite
     end
 
     def commit!
-      admin.git.add('.')
-      admin.git.commit_all("Modified configuration by rubolite")
+      return unless commitable?
+      admin.git.add(".")
+      admin.git.commit "Modified configuration by rubolite"
     end
 
     def push!
@@ -60,6 +65,10 @@ module Rubolite
       @repos = nil
       @groups = nil
       @ssh_keys = {}
+    end
+
+    def commitable?
+      admin.git.status.changed.size > 0
     end
   end
 end

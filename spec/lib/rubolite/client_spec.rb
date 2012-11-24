@@ -39,6 +39,10 @@ describe Rubolite::Client do
   end
 
   context "saving" do
+    let(:git) { stub status: status, add: nil }
+    let(:status) { stub changed: changed }
+    let(:changed) { Hash.new }
+
     it "saves changes" do
       admin.writer.should_receive(:write!)
       subject.save!
@@ -55,7 +59,14 @@ describe Rubolite::Client do
     end
 
     it "commits the changes to the repo" do
-      admin.git.should_receive(:commit_all)
+      admin.git.should_receive(:commit)
+      subject.commit!
+    end
+
+    it "commits only if things have changed" do
+      subject.admin.stub(git: git)
+
+      admin.git.should_not_receive(:commit_all)
       subject.commit!
     end
 
@@ -106,6 +117,21 @@ describe Rubolite::Client do
       ssh_keys = subject.ssh_keys.object_id
       subject.reset!
       expect(subject.ssh_keys.object_id).not_to eq(ssh_keys)
+    end
+  end
+
+  context "status reporting" do
+    let(:git) { stub status: status }
+    let(:status) { stub changed: changed }
+    let(:changed) { Hash.new }
+
+    before(:each) do
+      subject.admin.stub(git: git)
+    end
+
+    it "reports that it is commitable" do
+      changed.should_receive(:size).and_return(1)
+      expect(subject).to be_commitable
     end
   end
 end
