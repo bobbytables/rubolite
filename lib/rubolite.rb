@@ -1,4 +1,5 @@
 require "forwardable"
+require "git"
 
 require "rubolite/version"
 require "rubolite/admin"
