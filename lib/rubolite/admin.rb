@@ -1,5 +1,3 @@
-require "git"
-
 module Rubolite
   class Admin
     InvalidPath = Class.new(Exception)
