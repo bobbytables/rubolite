@@ -3,7 +3,7 @@ Rubolite
 
 Rubolite is an interface to Gitolite (https://github.com/sitaramc/gitolite)
 
-@robertross
+@robertoross
 
 
 Usage
