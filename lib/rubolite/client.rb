@@ -68,7 +68,7 @@ module Rubolite
     end
 
     def commitable?
-      admin.git.status.changed.size > 0
+      (admin.git.status.changed.size + admin.git.status.untracked.size) > 0
     end
   end
 end

@@ -40,8 +40,9 @@ describe Rubolite::Client do
 
   context "saving" do
     let(:git) { stub status: status, add: nil }
-    let(:status) { stub changed: changed }
+    let(:status) { stub changed: changed, untracked: untracked }
     let(:changed) { Hash.new }
+    let(:untracked) { Hash.new }
 
     it "saves changes" do
       admin.writer.should_receive(:write!)
@@ -123,15 +124,21 @@ describe Rubolite::Client do
 
   context "status reporting" do
     let(:git) { stub status: status }
-    let(:status) { stub changed: changed }
+    let(:status) { stub changed: changed, untracked: untracked }
     let(:changed) { Hash.new }
+    let(:untracked) { Hash.new }
 
     before(:each) do
       subject.admin.stub(git: git)
     end
 
-    it "reports that it is commitable" do
+    it "reports that it is commitable when there's changed files" do
       changed.should_receive(:size).and_return(1)
+      expect(subject).to be_commitable
+    end
+
+    it "reports that it is commitable when there's untracked files" do
+      untracked.should_receive(:size).and_return(1)
       expect(subject).to be_commitable
     end
   end
